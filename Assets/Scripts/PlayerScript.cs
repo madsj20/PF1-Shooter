@@ -28,6 +28,10 @@ namespace QuickStart
         private Weapon activeWeapon;
         private float weaponCooldownTime;
 
+        private float speed = 1;
+        private float walkingSpeed = 1;
+        private float runningSpeed = 2.5f;
+
         void Awake()
         {
             //allows all players to run this
@@ -55,7 +59,7 @@ namespace QuickStart
             }
 
             float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 110.0f;
-            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f;
+            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
 
             transform.Rotate(0, moveX, 0);
             transform.Translate(0, 0, moveZ);
@@ -80,6 +84,18 @@ namespace QuickStart
                     sceneScript.UIAmmo(activeWeapon.weaponAmmo);
                     CmdShootRay();
                 }
+            }
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Debug.Log("Pressed Shift");
+                // Set current speed to run if shift is down
+                speed = runningSpeed;
+            }
+            else
+            {
+                // Otherwise set current speed to walking speed
+                speed = walkingSpeed;
             }
         }
 
