@@ -15,7 +15,7 @@ public class DBScript : MonoBehaviour
         
         
         CreateDB();
-        AddScore("stine",69);
+        //AddScore("stine",69);
         ReadLB();
 
     }
@@ -100,7 +100,7 @@ public class DBScript : MonoBehaviour
                 {
                     while(reader.Read())
                     {
-                        Debug.Log("Name: "+ reader["name"] + "Score: "+ reader["score"]);
+                        Debug.Log("Name: "+ reader["name"] + " Score: "+ reader["score"]);
 
                     }
 
