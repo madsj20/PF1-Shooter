@@ -8,6 +8,11 @@ public class DBScript : MonoBehaviour
 {
     //Stores name of DataBase
     private string dbName = "URI=file:myDB.db";
+    string Tscore;
+    string Tname;
+    int x;
+
+  
     
     void Start()
     {
@@ -15,7 +20,7 @@ public class DBScript : MonoBehaviour
         
         
         CreateDB();
-        //AddScore("stine",69);
+        //AddScore("timgaming",79);
         ReadLB();
 
     }
@@ -94,13 +99,25 @@ public class DBScript : MonoBehaviour
                 //takes all the info from table
                 command.CommandText = "SELECT * FROM scoreboard ORDER BY score DESC";
 
+                
+
 
                 //for every iterations in table
                 using(IDataReader reader = command.ExecuteReader())
                 {
                     while(reader.Read())
                     {
-                        Debug.Log("Name: "+ reader["name"] + " Score: "+ reader["score"]);
+                        //Debug.Log("Name: "+ reader["name"] + " Score: "+ reader["score"]);
+                        //Tname = reader["name"];
+                        if( x<5)
+                        {
+                        Tname = reader["name"].ToString() +' ' + reader["score"].ToString();
+                        Debug.Log(Tname);
+                        x++;
+
+                        }
+                        //slay = reader["name"].ToString();
+                        //Debug.Log(slay);
 
                     }
 
