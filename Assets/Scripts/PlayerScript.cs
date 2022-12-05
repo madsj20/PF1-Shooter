@@ -116,7 +116,7 @@ namespace QuickStart
             sceneScript.playerScript = this;
 
             Camera.main.transform.SetParent(transform);
-            Camera.main.transform.localPosition = new Vector3(0, 0, 0);
+            Camera.main.transform.localPosition = new Vector3(0, 0.65f, 0);
 
             namePlate.transform.localPosition = new Vector3(0, -0.3f, 0.6f);
             namePlate.transform.Rotate(0, 0, 180);

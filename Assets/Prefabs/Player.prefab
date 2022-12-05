@@ -689,10 +689,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e749e7d19e5676f4fb3f6651bc30aa3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpeed: 15
+  weaponSpeed: 100
   weaponLife: 3
   weaponCooldown: 1
-  weaponAmmo: 15
+  weaponAmmo: 99
   weaponBullet: {fileID: 5850588891594524120, guid: 9db18f1e6f2787842bb16d15cbd9a8fc, type: 3}
   weaponFirePosition: {fileID: 4963141580193438452}
 --- !u!1 &8086275553219992975
@@ -792,9 +792,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e749e7d19e5676f4fb3f6651bc30aa3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpeed: 15
-  weaponLife: 3
-  weaponCooldown: 1
+  weaponSpeed: 70
+  weaponLife: 4
+  weaponCooldown: 3
   weaponAmmo: 15
   weaponBullet: {fileID: 7204101315359826492, guid: e9d22f65102ba2a4180233ebd281a7ae, type: 3}
   weaponFirePosition: {fileID: 7993613054765306616}
