@@ -58,6 +58,10 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+#database ignore
+*.db
+
+
 # Crashlytics generated file
 crashlytics-build.properties
 
