@@ -62,45 +62,47 @@ namespace QuickStart
                 namePlate.transform.LookAt(Camera.main.transform);
                 return;
             }
-
-            float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 110.0f;
-            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
-
-            transform.Rotate(0, moveX, 0);
-            transform.Translate(0, 0, moveZ);
-
-            if (Input.GetMouseButtonDown(1)) //Right mouse button to change weapon
+            if (sceneScript.readyStatus != 0)
             {
-                selectedWeaponLocal += 1;
+                float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 110.0f;
+                float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
 
-                if (selectedWeaponLocal > weaponArray.Length)
-                    selectedWeaponLocal = 1;
+                transform.Rotate(0, moveX, 0);
+                transform.Translate(0, 0, moveZ);
 
-                CmdChangeActiveWeapon(selectedWeaponLocal);
-            }
-
-
-            if (Input.GetMouseButtonDown(0)) //Left mouse button to shoot
-            {
-                if(activeWeapon && Time.time > weaponCooldownTime && activeWeapon.weaponAmmo > 0)
+                if (Input.GetMouseButtonDown(1)) //Right mouse button to change weapon
                 {
-                    weaponCooldownTime = Time.time + activeWeapon.weaponCooldown;
-                    activeWeapon.weaponAmmo -= 1;
-                    sceneScript.UIAmmo(activeWeapon.weaponAmmo);
-                    CmdShootRay();
-                }
-            }
+                    selectedWeaponLocal += 1;
 
-            if (Input.GetKey(KeyCode.LeftShift))
-            {
-                Debug.Log("Pressed Shift");
-                // Set current speed to run if shift is down
-                speed = runningSpeed;
-            }
-            else
-            {
-                // Otherwise set current speed to walking speed
-                speed = walkingSpeed;
+                    if (selectedWeaponLocal > weaponArray.Length)
+                        selectedWeaponLocal = 1;
+
+                    CmdChangeActiveWeapon(selectedWeaponLocal);
+                }
+
+
+                if (Input.GetMouseButtonDown(0)) //Left mouse button to shoot
+                {
+                    if (activeWeapon && Time.time > weaponCooldownTime && activeWeapon.weaponAmmo > 0)
+                    {
+                        weaponCooldownTime = Time.time + activeWeapon.weaponCooldown;
+                        activeWeapon.weaponAmmo -= 1;
+                        sceneScript.UIAmmo(activeWeapon.weaponAmmo);
+                        CmdShootRay();
+                    }
+                }
+
+                if (Input.GetKey(KeyCode.LeftShift))
+                {
+                    Debug.Log("Pressed Shift");
+                    // Set current speed to run if shift is down
+                    speed = runningSpeed;
+                }
+                else
+                {
+                    // Otherwise set current speed to walking speed
+                    speed = walkingSpeed;
+                }
             }
         }
 
