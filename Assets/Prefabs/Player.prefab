@@ -229,6 +229,10 @@ MonoBehaviour:
   - {fileID: 2842156487073564992}
   - {fileID: 4246959550952275632}
   activeWeaponSynced: 1
+  objectsToHide:
+  - {fileID: 298446383320521082}
+  - {fileID: 298446385193643623}
+  isDead: 0
 --- !u!1 &298446385193643623
 GameObject:
   m_ObjectHideFlags: 0

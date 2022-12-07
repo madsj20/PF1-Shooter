@@ -32,7 +32,10 @@ namespace QuickStart
         private float walkingSpeed = 1;
         private float runningSpeed = 2.5f;
 
+        public GameObject[] objectsToHide;
+        [SyncVar(hook = nameof(OnChanged))]
         public bool isDead = false;
+
 
         void Awake()
         {
@@ -132,6 +135,7 @@ namespace QuickStart
         public override void OnStartLocalPlayer()
         {
             sceneScript.playerScript = this;
+            sceneScript.SetupScene();
 
             Camera.main.transform.SetParent(transform);
             Camera.main.transform.localPosition = new Vector3(0, 0.65f, 0);
@@ -186,10 +190,40 @@ namespace QuickStart
                 sceneScript.statusText = $"{playerName} says hello {Random.Range(10, 99)}";
         }
         
-        [Command]
-        public void CmdPlayerStatus(bool status)
+        void OnChanged(bool _Old, bool _New)
         {
-            
+            if (isDead == false)
+            {
+                    foreach(var obj in objectsToHide)
+                {
+                        obj.SetActive(true);
+                }
+
+                if (isLocalPlayer)
+                {
+                    this.transform.position = NetworkManager.startPositions[Random.Range(0, NetworkManager.startPositions.Count)].position;
+                }
+                sceneScript.statusText = "Player Respawned";
+            }
+            else if (isDead == true)
+            {
+                foreach (var obj in objectsToHide)
+                {
+                    obj.SetActive(false);
+                }
+                sceneScript.statusText = "Player Defeated";
+            }
+            if (isLocalPlayer)
+            {
+                sceneScript.SetupScene();
+            }
+        }  
+
+        [Command]
+        public void CmdPlayerStatus(bool _Value)
+        {
+            // player info sent to server, then server changes sync var which updates, causing hooks to fire
+            isDead = _Value;
         }
     }
 }
