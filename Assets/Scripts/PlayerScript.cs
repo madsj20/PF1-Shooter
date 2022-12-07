@@ -32,6 +32,8 @@ namespace QuickStart
         private float walkingSpeed = 1;
         private float runningSpeed = 2.5f;
 
+        public bool isDead = false;
+
         void Awake()
         {
             //allows all players to run this
@@ -182,6 +184,12 @@ namespace QuickStart
         {
             if (sceneScript)
                 sceneScript.statusText = $"{playerName} says hello {Random.Range(10, 99)}";
+        }
+        
+        [Command]
+        public void CmdPlayerStatus(bool status)
+        {
+            
         }
     }
 }
