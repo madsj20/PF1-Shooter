@@ -18,15 +18,16 @@ public class HighscoreTable : MonoBehaviour
     private List<string> scores = new List<string>();
 
     private float templateHeight = 40f;
-
-    private string dbName = "URI=file:myDB.db";
-    string Tscore;
+    private int i;
+   
+    
     string Tname;
     
 
 
-    private void Awake() 
+    private void Start() 
     {
+        
         names = this.GetComponent<DBScript>().names;
         scores = this.GetComponent<DBScript>().scores;
 
@@ -40,7 +41,7 @@ public class HighscoreTable : MonoBehaviour
 
         
         //to make only 5 scores show
-        for (int i = 0; i < names.Count; i++)
+        for (i = 0; i < names.Count; i++)
         {
             //we make a clone of the og template here 
             Transform entryTransform = Instantiate(entryTemplate, entryContainer);

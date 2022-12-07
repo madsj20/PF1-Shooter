@@ -10,7 +10,7 @@ public class DBScript : MonoBehaviour
     private string dbName = "URI=file:myDB.db";
     //string Tscore;
    // string Tname;
-    int x;
+    private int x;
     public List<string> names = new List<string>();
     public List<string> scores = new List<string>();
 
@@ -22,7 +22,7 @@ public class DBScript : MonoBehaviour
         
         
         CreateDB();
-        //AddScore("stienpin",100000);
+        //AddScore("joakim",100);
         ReadLB();
 
     }
