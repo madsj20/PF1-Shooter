@@ -8,19 +8,21 @@ public class DBScript : MonoBehaviour
 {
     //Stores name of DataBase
     private string dbName = "URI=file:myDB.db";
-    string Tscore;
-    string Tname;
+    //string Tscore;
+   // string Tname;
     int x;
+    public List<string> names = new List<string>();
+    public List<string> scores = new List<string>();
 
-  
-    
-    void Start()
+
+
+    void Awake()
     {
 
         
         
         CreateDB();
-        //AddScore("timgaming",79);
+        //AddScore("stienpin",100000);
         ReadLB();
 
     }
@@ -107,17 +109,17 @@ public class DBScript : MonoBehaviour
                 {
                     while(reader.Read())
                     {
-                        //Debug.Log("Name: "+ reader["name"] + " Score: "+ reader["score"]);
-                        //Tname = reader["name"];
-                        if( x<5)
-                        {
-                        Tname = reader["name"].ToString() +' ' + reader["score"].ToString();
-                        Debug.Log(Tname);
-                        x++;
 
+                        if (x < 5)
+                        {
+                            //Tname = reader["name"].ToString() + ' ' + reader["score"].ToString();
+                            //Debug.Log(Tname);
+                            names.Add(reader["name"].ToString());
+                            scores.Add(reader["score"].ToString());
+                            x++;
                         }
-                        //slay = reader["name"].ToString();
-                        //Debug.Log(slay);
+                        
+                     
 
                     }
 
