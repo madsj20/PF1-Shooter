@@ -36,6 +36,8 @@ namespace QuickStart
         [SyncVar(hook = nameof(OnChanged))]
         public bool isDead = false;
 
+        [SyncVar] public int health = 4;
+
 
         void Awake()
         {
@@ -226,6 +228,18 @@ namespace QuickStart
         {
             // player info sent to server, then server changes sync var which updates, causing hooks to fire
             isDead = _Value;
+        }
+
+        [ServerCallback]
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.tag == "Bullet")
+            {
+                --health;
+                NetworkServer.Destroy(other.gameObject);
+                /*if (health == 0)
+                    NetworkServer.Destroy(gameObject);*/
+            }
         }
     }
 }

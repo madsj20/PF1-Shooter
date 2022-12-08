@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 862217789035518170}
   - component: {fileID: 4072027141949049378}
   - component: {fileID: 2278110685977570560}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ CapsuleCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1652422508975879343}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.5
   m_Height: 2
@@ -127,7 +127,7 @@ GameObject:
   - component: {fileID: 4687656757945923606}
   - component: {fileID: 2724051618682036336}
   - component: {fileID: 1678377704076640918}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
