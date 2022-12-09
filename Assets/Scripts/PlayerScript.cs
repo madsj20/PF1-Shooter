@@ -1,3 +1,4 @@
+using System.Collections;
 using Mirror;
 using UnityEngine;
 using TMPro;
@@ -108,6 +109,7 @@ namespace QuickStart
             }
         }
 
+
         [Command]
         void CmdShootRay()
         {
@@ -143,6 +145,7 @@ namespace QuickStart
 
             Camera.main.transform.SetParent(transform);
             Camera.main.transform.localPosition = new Vector3(0, 0.65f, 0);
+            Camera.main.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
             namePlate.transform.localPosition = new Vector3(0, -0.3f, 0.6f);
             namePlate.transform.Rotate(0, 0, 180);
@@ -198,9 +201,10 @@ namespace QuickStart
         {
             if (isDead == false)
             {
-                    foreach(var obj in objectsToHide)
+                health = 4;
+                foreach(var obj in objectsToHide)
                 {
-                        obj.SetActive(true);
+                    obj.SetActive(true);
                 }
 
                 if (isLocalPlayer)
@@ -223,7 +227,7 @@ namespace QuickStart
             }
         }  
 
-        [Command]
+        [Command(requiresAuthority = false)]
         public void CmdPlayerStatus(bool _Value)
         {
             // player info sent to server, then server changes sync var which updates, causing hooks to fire
@@ -233,12 +237,16 @@ namespace QuickStart
         [ServerCallback]
         void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.tag == "Bullet")
+            if (other.gameObject.CompareTag("Bullet"))
             {
+                Debug.Log("Hit by bullet");
                 --health;
                 NetworkServer.Destroy(other.gameObject);
-                /*if (health == 0)
-                    NetworkServer.Destroy(gameObject);*/
+                if (health == 0)
+                {
+                    Debug.Log("Dead");
+                    CmdPlayerStatus(true);
+                }
             }
         }
     }

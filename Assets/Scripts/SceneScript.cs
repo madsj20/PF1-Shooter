@@ -1,3 +1,4 @@
+using System.Collections;
 using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,11 @@ namespace QuickStart
         public TMP_Text canvasStatusText;
         public PlayerScript playerScript;
         public TMP_Text canvasAmmoText;
+        public TMP_Text respawnCountdownText;
         public Button buttonReady, buttonDeath, buttonRespawn;
+        public Camera topViewCamera;
+
+        public bool countdown = false;
 
         private void Start()
         {
@@ -21,6 +26,15 @@ namespace QuickStart
             //you could choose to fully hide the server only buttons from clients, but for this guide we will show them to have less code involved
             buttonDeath.onClick.AddListener(ButtonDeath);
             buttonRespawn.onClick.AddListener(ButtonRespawn);
+        }
+
+        private void Update()
+        {
+            if (playerScript.isDead == true && countdown == false)
+            {
+                countdown = true;
+                StartCoroutine(RespawnTimer());
+            }
         }
 
         // Changes ready state for all players
@@ -72,6 +86,27 @@ namespace QuickStart
         public void ButtonRespawn()
         {
             playerScript.CmdPlayerStatus(false);
+        }
+
+        //respawn timer
+        public IEnumerator RespawnTimer()
+        {
+            if (countdown == true)
+            {
+                respawnCountdownText.gameObject.SetActive(true);
+                respawnCountdownText.text = "Respawn in: 3";
+                Debug.Log("Respawn in: 3");
+                yield return new WaitForSeconds(1);
+                respawnCountdownText.text = "Respawn in: 2";
+                Debug.Log("Respawn in: 2");
+                yield return new WaitForSeconds(1);
+                respawnCountdownText.text = "Respawn in: 1";
+                Debug.Log("Respawn in: 1");
+                yield return new WaitForSeconds(1);
+                respawnCountdownText.gameObject.SetActive(false);
+                playerScript.CmdPlayerStatus(false);
+                countdown = false;
+            }
         }
 
         public void SetupScene()

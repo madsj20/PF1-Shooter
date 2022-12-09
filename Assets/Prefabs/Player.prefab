@@ -222,6 +222,7 @@ MonoBehaviour:
   syncInterval: 0.1
   playerNameText: {fileID: 7363314089365256457}
   namePlate: {fileID: 1745858271145026843}
+  playerCamera: {fileID: 0}
   playerName: 
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   weaponArray:
@@ -233,6 +234,7 @@ MonoBehaviour:
   - {fileID: 298446383320521082}
   - {fileID: 298446385193643623}
   isDead: 0
+  health: 4
 --- !u!1 &298446385193643623
 GameObject:
   m_ObjectHideFlags: 0
