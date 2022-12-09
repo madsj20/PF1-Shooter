@@ -93,6 +93,7 @@ namespace QuickStart
         {
             if (countdown == true)
             {
+                countdown = false;
                 respawnCountdownText.gameObject.SetActive(true);
                 respawnCountdownText.text = "Respawn in: 3";
                 Debug.Log("Respawn in: 3");
@@ -105,7 +106,6 @@ namespace QuickStart
                 yield return new WaitForSeconds(1);
                 respawnCountdownText.gameObject.SetActive(false);
                 playerScript.CmdPlayerStatus(false);
-                countdown = false;
             }
         }
 
