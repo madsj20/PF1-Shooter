@@ -9,5 +9,14 @@ namespace QuickStart
         {
             SceneManager.LoadScene("GameList");
         }
+
+        public void LoadLeaderboard()
+        {
+            SceneManager.LoadScene("LeaderBoard");
+        }
+        public void LoadMenu()
+        {
+            SceneManager.LoadScene("Menu");
+        }
     }
 }

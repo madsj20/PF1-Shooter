@@ -36,6 +36,7 @@ namespace QuickStart
         private SceneScript sceneScript;
         private ScoreController ScoreController;
         private DBScript DBScript;
+        private Timer timer;
 
         private Weapon activeWeapon;
         private float weaponCooldownTime;
@@ -88,6 +89,7 @@ namespace QuickStart
             //allows all players to run this
             sceneScript = GameObject.Find("SceneReference").GetComponent<SceneReference>().sceneScript;
             ScoreController = GameObject.Find("ScoreController").GetComponent<ScoreController>();
+            timer = GameObject.Find("Timer").GetComponent<Timer>();
             DBScript = GameObject.Find("DBHandler").GetComponent<DBScript>();
             // disable all weapons
             foreach (var item in weaponArray)
@@ -124,6 +126,7 @@ namespace QuickStart
             }
             if (sceneScript.readyStatus != 0)
             {
+                timer.timerIsRunning = true;
                 Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity, mouseY.ReadValue<float>() * cameraSensitivity);
                 rotX -= mouseInput.y;
                 rotX = Mathf.Clamp(rotX, -90, 90);
@@ -192,6 +195,7 @@ namespace QuickStart
             else
             {
                 Cursor.lockState = CursorLockMode.None;
+                timer.timerIsRunning = false;
             }
             weaponHolder.transform.parent = Camera.main.transform;
         }
