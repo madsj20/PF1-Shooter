@@ -127,7 +127,7 @@ namespace QuickStart
                     var maxValueKey = ScoreController.scores.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
                     DBScript.AddScore(maxValueKey,maxValue);
 
-                    Debug.Log(maxValue + " " + maxValueKey);
+                    Debug.Log(maxValue + " " + maxValueKey); 
 
                 }
 
