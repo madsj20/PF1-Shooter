@@ -223,7 +223,7 @@ MonoBehaviour:
   isDead: 0
   health: 4
   playerRoot: {fileID: 298446383320521078}
-  cameraSensitivity: 0.4
+  cameraSensitivity: 0.2
   controller: {fileID: 8910329046052022374}
   move:
     m_Name: Move
