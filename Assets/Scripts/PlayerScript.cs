@@ -4,6 +4,7 @@ using Mirror;
 using UnityEngine;
 using TMPro;
 using System.Linq;
+using UnityEngine.InputSystem;
 
 namespace QuickStart
 {
@@ -16,6 +17,7 @@ namespace QuickStart
 
         public TextMeshPro playerNameText;
         public GameObject namePlate;
+        public GameObject weaponHolder;
 
         private Material playerMaterialClone;
 
@@ -38,9 +40,9 @@ namespace QuickStart
         private Weapon activeWeapon;
         private float weaponCooldownTime;
 
-        private float speed = 1;
-        private float walkingSpeed = 1;
-        private float runningSpeed = 2.5f;
+        public float speed = 4;
+        private float walkingSpeed = 4;
+        private float runningSpeed = 10f;
 
         public GameObject[] objectsToHide;
         [SyncVar(hook = nameof(OnChanged))]
@@ -48,7 +50,37 @@ namespace QuickStart
 
         [SyncVar] public int health = 4;
 
+        [Header("Camera")]
+        public Transform playerRoot;
+        //public Transform playerCam;
 
+        public float cameraSensitivity;
+
+        float rotX;
+        float rotY;
+
+        [Header("Movement")]
+        public CharacterController controller;
+        Vector3 velocity;
+
+        [Header("Input")]
+        public InputAction move;
+        public InputAction mouseX;
+        public InputAction mouseY;
+
+        private void OnEnable()
+        {
+            move.Enable();
+            mouseX.Enable();
+            mouseY.Enable();
+        }
+
+        void OnDisable()
+        {
+            move.Disable();
+            mouseX.Disable();
+            mouseY.Disable();
+        }
         void Awake()
         {
             //playerRef = gameObject.connectionId;
@@ -69,6 +101,18 @@ namespace QuickStart
             }
         }
 
+        void Start()
+        {
+            /*if (isLocalPlayer)
+            {
+                playerCam.GetComponent<Camera>().enabled = false;
+                return;
+            }*/
+            //Cursor.lockState = CursorLockMode.Locked;
+
+            controller = GetComponent<CharacterController>();
+        }
+
         void Update()
         {
             if (!isLocalPlayer)
@@ -80,11 +124,20 @@ namespace QuickStart
             }
             if (sceneScript.readyStatus != 0)
             {
-                float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 110.0f;
-                float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
+                Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity, mouseY.ReadValue<float>() * cameraSensitivity);
+                rotX -= mouseInput.y;
+                rotX = Mathf.Clamp(rotX, -90, 90);
+                rotY += mouseInput.x;
+                Cursor.lockState = CursorLockMode.Locked;
 
-                transform.Rotate(0, moveX, 0);
-                transform.Translate(0, 0, moveZ);
+                playerRoot.rotation = Quaternion.Euler(0f, rotY, 0f);
+                Camera.main.transform.localRotation = Quaternion.Euler(rotX, 0f, 0f);
+
+                //Player movement
+                Vector2 moveInput = move.ReadValue<Vector2>();
+                Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
+                controller.Move(moveVelocity * speed * Time.deltaTime);
+                controller.Move(velocity * Time.deltaTime);
 
                 if (Input.GetMouseButtonDown(1)) //Right mouse button to change weapon
                 {
@@ -132,6 +185,11 @@ namespace QuickStart
                 }
 
             }
+            else
+            {
+                Cursor.lockState = CursorLockMode.None;
+            }
+            weaponHolder.transform.parent = Camera.main.transform;
         }
 
 
@@ -179,7 +237,7 @@ namespace QuickStart
             sceneScript.SetupScene();
 
             Camera.main.transform.SetParent(transform);
-            Camera.main.transform.localPosition = new Vector3(0, 0.65f, 0);
+            Camera.main.transform.localPosition = new Vector3(0, 0.5f, 0);
             Camera.main.transform.localRotation = new Quaternion(0, 0, 0, 0);
 
             namePlate.transform.localPosition = new Vector3(0, -0.3f, 0.6f);

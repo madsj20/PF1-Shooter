@@ -49,6 +49,7 @@ GameObject:
   - component: {fileID: 298446383320521075}
   - component: {fileID: 298446383320521076}
   - component: {fileID: 295999779601432324}
+  - component: {fileID: 8910329046052022374}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -222,6 +223,7 @@ MonoBehaviour:
   syncInterval: 0.1
   playerNameText: {fileID: 7363314089365256457}
   namePlate: {fileID: 1745858271145026843}
+  weaponHolder: {fileID: 60377899601707284}
   playerName: 
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   weaponArray:
@@ -229,11 +231,116 @@ MonoBehaviour:
   - {fileID: 2842156487073564992}
   - {fileID: 4246959550952275632}
   activeWeaponSynced: 1
+  speed: 4
   objectsToHide:
   - {fileID: 298446383320521082}
   - {fileID: 298446385193643623}
   isDead: 0
   health: 4
+  playerRoot: {fileID: 298446383320521078}
+  cameraSensitivity: 0.4
+  controller: {fileID: 8910329046052022374}
+  move:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 701d5187-23a3-477c-9a6f-c6bfe40ebcd7
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: 7890ca0c-0450-4353-af1b-c34fa3b05b23
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 5bc0ede4-9da2-448a-87d4-5cfa03e7d48c
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 211518ef-ddb0-4b3d-afb3-7f576613d5b1
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: left
+      m_Id: d1668607-f456-4fc0-8479-153fbe3170ee
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: a5f9a3a8-8e73-4db9-824e-f511351d3db1
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    m_Flags: 0
+  mouseX:
+    m_Name: Mouse X
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 71144c30-b803-4d52-866e-630207900845
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: 7794cfcf-8688-43fd-a2e1-3fea11335d7c
+      m_Path: <Mouse>/delta/x
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Mouse X
+      m_Flags: 0
+    m_Flags: 0
+  mouseY:
+    m_Name: Mouse Y
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: dfb62d44-2369-49fa-921e-18942d6b1171
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 
+      m_Id: cc68e644-6471-457c-9c56-8b89746b9539
+      m_Path: <Mouse>/delta/y
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Mouse Y
+      m_Flags: 0
+    m_Flags: 0
+--- !u!143 &8910329046052022374
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298446383320521082}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &298446385193643623
 GameObject:
   m_ObjectHideFlags: 0
