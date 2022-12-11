@@ -12,7 +12,7 @@ namespace QuickStart
         //bullet player reference
         //public string playerRef;
 
-        
+
 
         public TextMeshPro playerNameText;
         public GameObject namePlate;
@@ -119,15 +119,15 @@ namespace QuickStart
                     // Otherwise set current speed to walking speed
                     speed = walkingSpeed;
                 }
-                if(Input.GetKeyDown(KeyCode.P))
+                if (Input.GetKeyDown(KeyCode.P))
                 {
                     //Debug.Log(playerNameText.text + " score: "+ ScoreController.scores[playerNameText.text]);
 
                     var maxValue = ScoreController.scores.Values.Max();
                     var maxValueKey = ScoreController.scores.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
-                    DBScript.AddScore(maxValueKey,maxValue);
+                    DBScript.AddScore(maxValueKey, maxValue);
 
-                    Debug.Log(maxValue + " " + maxValueKey); 
+                    Debug.Log(maxValue + " " + maxValueKey);
 
                 }
 
@@ -150,13 +150,13 @@ namespace QuickStart
             bullet.GetComponent<Bullet>().playerRef = playerNameText.text;
             // PlayerBulletRef(bullet);
             Destroy(bullet, activeWeapon.weaponLife);
-            
+
         }
         [Command]
         void PlayerBulletRef(GameObject bullet)
         {
             //  bullet.GetComponent<Bullet>().playerRef = "hejsa";
-             
+
         }
 
 
@@ -240,13 +240,13 @@ namespace QuickStart
             if (sceneScript)
                 sceneScript.statusText = $"{playerName} says hello {Random.Range(10, 99)}";
         }
-        
+
         void OnChanged(bool _Old, bool _New)
         {
             if (isDead == false)
             {
                 health = 4;
-                foreach(var obj in objectsToHide)
+                foreach (var obj in objectsToHide)
                 {
                     obj.SetActive(true);
                 }
@@ -269,7 +269,7 @@ namespace QuickStart
             {
                 sceneScript.SetupScene();
             }
-        }  
+        }
 
         [Command(requiresAuthority = false)]
         public void CmdPlayerStatus(bool _Value)
