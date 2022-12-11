@@ -1,12 +1,19 @@
+using System.Collections.Generic;
 using System.Collections;
 using Mirror;
 using UnityEngine;
 using TMPro;
+using System.Linq;
 
 namespace QuickStart
 {
     public class PlayerScript : NetworkBehaviour
     {
+        //bullet player reference
+        //public string playerRef;
+
+        
+
         public TextMeshPro playerNameText;
         public GameObject namePlate;
 
@@ -25,6 +32,8 @@ namespace QuickStart
         public int activeWeaponSynced = 1;
 
         private SceneScript sceneScript;
+        private ScoreController ScoreController;
+        private DBScript DBScript;
 
         private Weapon activeWeapon;
         private float weaponCooldownTime;
@@ -42,8 +51,12 @@ namespace QuickStart
 
         void Awake()
         {
+            //playerRef = gameObject.connectionId;
+
             //allows all players to run this
             sceneScript = GameObject.Find("SceneReference").GetComponent<SceneReference>().sceneScript;
+            ScoreController = GameObject.Find("ScoreController").GetComponent<ScoreController>();
+            DBScript = GameObject.Find("DBHandler").GetComponent<DBScript>();
             // disable all weapons
             foreach (var item in weaponArray)
                 if (item != null)
@@ -106,6 +119,18 @@ namespace QuickStart
                     // Otherwise set current speed to walking speed
                     speed = walkingSpeed;
                 }
+                if(Input.GetKeyDown(KeyCode.P))
+                {
+                    //Debug.Log(playerNameText.text + " score: "+ ScoreController.scores[playerNameText.text]);
+
+                    var maxValue = ScoreController.scores.Values.Max();
+                    var maxValueKey = ScoreController.scores.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
+                    DBScript.AddScore(maxValueKey,maxValue);
+
+                    Debug.Log(maxValue + " " + maxValueKey);
+
+                }
+
             }
         }
 
@@ -122,8 +147,18 @@ namespace QuickStart
             //bulletAudio.Play();
             GameObject bullet = Instantiate(activeWeapon.weaponBullet, activeWeapon.weaponFirePosition.position, activeWeapon.weaponFirePosition.rotation);
             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * activeWeapon.weaponSpeed;
+            bullet.GetComponent<Bullet>().playerRef = playerNameText.text;
+            // PlayerBulletRef(bullet);
             Destroy(bullet, activeWeapon.weaponLife);
+            
         }
+        [Command]
+        void PlayerBulletRef(GameObject bullet)
+        {
+            //  bullet.GetComponent<Bullet>().playerRef = "hejsa";
+             
+        }
+
 
         void OnNameChanged(string _Old, string _New)
         {
@@ -154,6 +189,15 @@ namespace QuickStart
             string name = "Player" + Random.Range(100, 999);
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             CmdSetupPlayer(name, color);
+
+            // Add the player's score to the scores dictionary
+            //ScoreController.scores.Add(playerNameText.text, 0);
+            initiatePlayerScore();
+        }
+        [Command(requiresAuthority = false)]
+        void initiatePlayerScore()
+        {
+            ScoreController.scores.Add(playerNameText.text, 0);
         }
 
         [Command]
@@ -247,7 +291,25 @@ namespace QuickStart
                     Debug.Log("Dead");
                     CmdPlayerStatus(true);
                 }
+                //Debug.Log("Hitby:" + other.GetComponent<Bullet>().playerRef);
+                //ScoreController.scores[other.gameObject.GetComponent<Bullet>().playerRef] += 1;
+
+                AddScore(other.gameObject.GetComponent<Bullet>().playerRef);
+                // Show Dictionary
+                string scoresString = "";
+                foreach (KeyValuePair<string, int> score in ScoreController.scores)
+                {
+                    scoresString += score.Key + ": " + score.Value + "\n";
+                }
+                ScoreController.scoresText.text = scoresString;
             }
+        }
+
+        [Command(requiresAuthority = false)]
+        void AddScore(string other)
+        {
+            //Debug.Log("Hitby:" + other.GetComponent<Bullet>().playerRef);
+            ScoreController.scores[other] += 1;
         }
     }
 }

@@ -222,7 +222,6 @@ MonoBehaviour:
   syncInterval: 0.1
   playerNameText: {fileID: 7363314089365256457}
   namePlate: {fileID: 1745858271145026843}
-  playerCamera: {fileID: 0}
   playerName: 
   playerColor: {r: 1, g: 1, b: 1, a: 1}
   weaponArray:
@@ -685,7 +684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e749e7d19e5676f4fb3f6651bc30aa3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpeed: 80
+  weaponSpeed: 50
   weaponLife: 3
   weaponCooldown: 0.1
   weaponAmmo: 99
@@ -778,7 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e749e7d19e5676f4fb3f6651bc30aa3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponSpeed: 70
+  weaponSpeed: 40
   weaponLife: 4
   weaponCooldown: 0.5
   weaponAmmo: 69
