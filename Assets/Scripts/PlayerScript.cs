@@ -40,9 +40,9 @@ namespace QuickStart
         private Weapon activeWeapon;
         private float weaponCooldownTime;
 
-        public float speed = 4;
-        private float walkingSpeed = 4;
-        private float runningSpeed = 10f;
+        public float speed = 1;
+        private float walkingSpeed = 1;
+        private float runningSpeed = 2.5f;
 
         public GameObject[] objectsToHide;
         [SyncVar(hook = nameof(OnChanged))]
@@ -134,10 +134,14 @@ namespace QuickStart
                 Camera.main.transform.localRotation = Quaternion.Euler(rotX, 0f, 0f);
 
                 //Player movement
-                Vector2 moveInput = move.ReadValue<Vector2>();
-                Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
-                controller.Move(moveVelocity * speed * Time.deltaTime);
-                controller.Move(velocity * Time.deltaTime);
+                //Vector2 moveInput = move.ReadValue<Vector2>();
+                //Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
+                //controller.Move(moveVelocity * speed * Time.deltaTime);
+                //controller.Move(velocity * Time.deltaTime);
+                float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
+                float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 4f * speed;
+                transform.Translate(0, 0, moveZ);
+                transform.Translate(moveX, 0, 0);
 
                 if (Input.GetMouseButtonDown(1)) //Right mouse button to change weapon
                 {

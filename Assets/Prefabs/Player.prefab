@@ -44,7 +44,6 @@ GameObject:
   - component: {fileID: 298446383320521078}
   - component: {fileID: 298446383320521079}
   - component: {fileID: 298446383320521080}
-  - component: {fileID: 298446383320521081}
   - component: {fileID: 298446383320521077}
   - component: {fileID: 298446383320521075}
   - component: {fileID: 298446383320521076}
@@ -125,20 +124,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &298446383320521081
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 298446383320521082}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!195 &298446383320521077
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -337,7 +322,7 @@ CharacterController:
   m_Height: 1
   m_Radius: 0.5
   m_SlopeLimit: 45
-  m_StepOffset: 0.3
+  m_StepOffset: 0
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
