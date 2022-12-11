@@ -68,13 +68,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b0de7f80bdecfd4e8c4a7e8340c5d1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0.1
   playerRoot: {fileID: 8071287276916446081}
   playerCam: {fileID: 204574803645769849}
   cameraSensitivity: 0.42
   controller: {fileID: 0}
   speed: 4
-  jumpHeight: 2.52
-  gravity: 9.82
   feet: {fileID: 8344176073825042342}
   move:
     m_Name: Move
