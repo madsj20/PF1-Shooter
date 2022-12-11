@@ -160,9 +160,12 @@ MonoBehaviour:
   canvasStatusText: {fileID: 520950667}
   playerScript: {fileID: 0}
   canvasAmmoText: {fileID: 1961912180}
+  respawnCountdownText: {fileID: 0}
   buttonReady: {fileID: 1717666789}
   buttonDeath: {fileID: 449526002}
   buttonRespawn: {fileID: 1981077165}
+  topViewCamera: {fileID: 0}
+  countdown: 0
   readyStatus: 0
   statusText: Hello
 --- !u!114 &118263518

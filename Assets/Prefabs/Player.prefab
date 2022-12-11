@@ -687,7 +687,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSpeed: 80
   weaponLife: 3
-  weaponCooldown: 0.2
+  weaponCooldown: 0.1
   weaponAmmo: 99
   weaponBullet: {fileID: 5850588891594524120, guid: 9db18f1e6f2787842bb16d15cbd9a8fc, type: 3}
   weaponFirePosition: {fileID: 4963141580193438452}
@@ -780,7 +780,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSpeed: 70
   weaponLife: 4
-  weaponCooldown: 0.75
+  weaponCooldown: 0.5
   weaponAmmo: 69
   weaponBullet: {fileID: 5850588891594524120, guid: 9db18f1e6f2787842bb16d15cbd9a8fc, type: 3}
   weaponFirePosition: {fileID: 7993613054765306616}
