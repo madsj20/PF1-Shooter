@@ -45,6 +45,8 @@ namespace QuickStart
         private float walkingSpeed = 1;
         private float runningSpeed = 2.5f;
 
+        public bool showWinner = false;
+
         public GameObject[] objectsToHide;
         [SyncVar(hook = nameof(OnChanged))]
         public bool isDead = false;
@@ -89,7 +91,7 @@ namespace QuickStart
             //allows all players to run this
             sceneScript = GameObject.Find("SceneReference").GetComponent<SceneReference>().sceneScript;
             ScoreController = GameObject.Find("ScoreController").GetComponent<ScoreController>();
-            timer = GameObject.Find("Timer").GetComponent<Timer>();
+            timer = GameObject.Find("TimerController").GetComponent<Timer>();
             DBScript = GameObject.Find("DBHandler").GetComponent<DBScript>();
             // disable all weapons
             foreach (var item in weaponArray)
@@ -124,7 +126,7 @@ namespace QuickStart
                 namePlate.transform.LookAt(Camera.main.transform);
                 return;
             }
-            if (sceneScript.readyStatus != 0)
+            if (sceneScript.readyStatus != 0 && showWinner == false)
             {
                 timer.timerIsRunning = true;
                 Vector2 mouseInput = new Vector2(mouseX.ReadValue<float>() * cameraSensitivity, mouseY.ReadValue<float>() * cameraSensitivity);
@@ -194,12 +196,10 @@ namespace QuickStart
             }
             else
             {
-                Cursor.lockState = CursorLockMode.None;
                 timer.timerIsRunning = false;
             }
             weaponHolder.transform.parent = Camera.main.transform;
         }
-
 
         [Command]
         void CmdShootRay()
@@ -241,6 +241,7 @@ namespace QuickStart
 
         public override void OnStartLocalPlayer()
         {
+            timer.playerScript = this;
             sceneScript.playerScript = this;
             sceneScript.SetupScene();
 

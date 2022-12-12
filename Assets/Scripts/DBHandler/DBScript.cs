@@ -26,6 +26,11 @@ public class DBScript : MonoBehaviour
         ReadLB();
 
     }
+    private void Start()
+    {
+        //shows curser again
+        Cursor.lockState = CursorLockMode.None;
+    }
 
 
 
