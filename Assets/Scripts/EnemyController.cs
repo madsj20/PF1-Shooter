@@ -28,10 +28,16 @@ public class EnemyController : MonoBehaviour
     {
         if (Input.GetKeyDown("t"))
         {
+            Debug.Log("Clicked T");
             PlayerTappedWall();
         }
 
         UpdatePatrolPosition();
+    }
+
+    private IEnumerator ForceEnemyTargetPosition()
+    {
+        yield return new WaitForSeconds(15);
     }
 
     private float GetDistanceToPosition(Vector3 playerPos, Vector3 enemyPos)
