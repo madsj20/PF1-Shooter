@@ -30,6 +30,11 @@ namespace QuickStart
         }
         void Update()
         {
+            RunTimer();
+        }
+        [Server]
+        void RunTimer()
+        {
             if (timerIsRunning)
             {
                 if (timeRemaining > 0)
@@ -87,7 +92,7 @@ namespace QuickStart
             //Go to Leaderboard
             NetworkManager.singleton.ServerChangeScene("LeaderBoard");
         }
-
+        [ClientRpc]
         void DisplayTime(float timeToDisplay)
         {
             timeToDisplay += 1;
