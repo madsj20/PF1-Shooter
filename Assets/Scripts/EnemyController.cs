@@ -2,16 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using Mirror;
 
 namespace QuickStart
 {
-    public class EnemyController : MonoBehaviour
+    public class EnemyController : NetworkBehaviour
     {
         private SceneScript sceneScript;
         private ScoreController ScoreController;
         private DBScript DBScript;
         private Timer timer;
-        [SerializeField] private PlayerScript playerScript;
 
         public NavMeshAgent agent;
         public GameObject player;
@@ -50,7 +50,7 @@ namespace QuickStart
             {
                 playerPos = other.GetComponent<Transform>().position;
                 SetDestination(new Vector3(playerPos.x, 0, playerPos.z));
-                Debug.Log("Player Position " + playerPos);
+                //Debug.Log("Player Position " + playerPos);
             }
         }
         private void OnTriggerEnter(Collider other)
@@ -58,12 +58,11 @@ namespace QuickStart
             if (other.gameObject.CompareTag("Bullet"))
             {
                 hp -= 1;
-                Destroy(other.gameObject);
                 if (hp <= 0)
                 {
                     Destroy(gameObject);
                 }
-                playerScript.AddScore(other.gameObject.GetComponent<Bullet>().playerRef);
+                pepepopo(other.gameObject);
                 // Show Dictionary
                 string scoresString = "";
                 foreach (KeyValuePair<string, int> score in ScoreController.scores)
@@ -71,6 +70,7 @@ namespace QuickStart
                     scoresString += score.Key + ": " + score.Value + "\n";
                 }
                 ScoreController.scoresText.text = scoresString;
+                Destroy(other.gameObject);
             }
         }
 
@@ -78,5 +78,18 @@ namespace QuickStart
         {
             agent.SetDestination(destination);
         }
+        
+        [Server]
+        public void AddScore(string other)
+        {
+            //Debug.Log("Hitby:" + other.GetComponent<Bullet>().playerRef);
+            ScoreController.scores[other] += 1;
+        }
+        [Server]
+        void pepepopo(GameObject other)
+        {
+            AddScore(other.gameObject.GetComponent<Bullet>().playerRef);
+        }
+
     }
 }

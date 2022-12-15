@@ -42,6 +42,7 @@ namespace QuickStart
                     Debug.Log("Time has run out!");
                     timeRemaining = 0;
                     timerIsRunning = false;
+                    sceneScript.readyStatus = 0;
                 }
             }
         }
