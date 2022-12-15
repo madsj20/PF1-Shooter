@@ -373,7 +373,7 @@ namespace QuickStart
         }
 
         [Command(requiresAuthority = false)]
-        void AddScore(string other)
+        public void AddScore(string other)
         {
             //Debug.Log("Hitby:" + other.GetComponent<Bullet>().playerRef);
             ScoreController.scores[other] += 1;

@@ -3,95 +3,80 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyController : MonoBehaviour
+namespace QuickStart
 {
-    public NavMeshAgent agent;
-    public GameObject player;
-
-    private int currentPatrolPosition = 0;
-    private Vector3[] patrolPositions =
+    public class EnemyController : MonoBehaviour
     {
-        new Vector3 {x=-9.0f, y=0.0f, z=-4.0f},
-        new Vector3 {x=0.0f, y=0.0f, z=-4.0f},
-        new Vector3 {x=0.0f, y=0.0f, z=-9.0f},
-        new Vector3 {x=-9.0f, y=0.0f, z=-9.0f}
-    };
+        private SceneScript sceneScript;
+        private ScoreController ScoreController;
+        private DBScript DBScript;
+        private Timer timer;
+        [SerializeField] private PlayerScript playerScript;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+        public NavMeshAgent agent;
+        public GameObject player;
+        public int hp = 2;
 
-    }
+        Vector3 playerPos;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown("t"))
+        private void Awake()
         {
-            Debug.Log("Clicked T");
-            PlayerTappedWall();
+            sceneScript = GameObject.Find("SceneReference").GetComponent<SceneReference>().sceneScript;
+            ScoreController = GameObject.Find("ScoreController").GetComponent<ScoreController>();
+            timer = GameObject.Find("TimerController").GetComponent<Timer>();
+            DBScript = GameObject.Find("DBHandler").GetComponent<DBScript>();
+        }
+        void Start()
+        {
+            StartCoroutine(ForceEnemyTargetPosition());
         }
 
-        UpdatePatrolPosition();
-    }
-
-    private IEnumerator ForceEnemyTargetPosition()
-    {
-        yield return new WaitForSeconds(15);
-    }
-
-    private float GetDistanceToPosition(Vector3 playerPos, Vector3 enemyPos)
-    {
-        float distanceToPosition = Mathf.Abs(playerPos.x - enemyPos.x) + Mathf.Abs(playerPos.z - enemyPos.z);
-        return distanceToPosition;
-    }
-
-    private void SetDestination(Vector3 destination)
-    {
-        agent.SetDestination(destination);
-    }
-
-    private void UpdatePatrolPosition()
-    {
-        Vector3 agentPos = this.transform.position;
-        if (GetDistanceToPosition(agentPos, patrolPositions[currentPatrolPosition]) < 1)
+        private IEnumerator ForceEnemyTargetPosition()
         {
-            if (currentPatrolPosition < 3)
+            float Xmax = 95f;
+            float Xmin = -9.75f;
+            float Zmax = 49f;
+            float Zmin = -49f;
+            float xCord = Random.Range(Xmax, Xmin);
+            float zCord = Random.Range(Zmax, Zmin);
+            SetDestination(new Vector3(xCord, 0, zCord));
+            yield return new WaitForSeconds(Random.Range(3f, 7f));
+            StartCoroutine(ForceEnemyTargetPosition());
+        }
+
+        private void OnTriggerStay(Collider other)
+        {
+            if (other.gameObject.CompareTag("Player"))
             {
-                currentPatrolPosition++;
-            }
-            else
-            {
-                currentPatrolPosition = 0;
+                playerPos = other.GetComponent<Transform>().position;
+                SetDestination(new Vector3(playerPos.x, 0, playerPos.z));
+                Debug.Log("Player Position " + playerPos);
             }
         }
-
-        SetDestination(patrolPositions[currentPatrolPosition]);
-    }
-
-    private IEnumerator SearchForPlayer()
-    {
-        float searchTime = 0.0f;
-        while (searchTime < 5.0f)
+        private void OnTriggerEnter(Collider other)
         {
-            Vector3 playerPos = player.transform.position;
-            SetDestination(playerPos);
-            searchTime += Time.deltaTime;
-            yield return null;
+            if (other.gameObject.CompareTag("Bullet"))
+            {
+                hp -= 1;
+                Destroy(other.gameObject);
+                if (hp <= 0)
+                {
+                    Destroy(gameObject);
+                }
+                playerScript.AddScore(other.gameObject.GetComponent<Bullet>().playerRef);
+                // Show Dictionary
+                string scoresString = "";
+                foreach (KeyValuePair<string, int> score in ScoreController.scores)
+                {
+                    scoresString += score.Key + ": " + score.Value + "\n";
+                }
+                ScoreController.scoresText.text = scoresString;
+            }
         }
 
-        SetDestination(patrolPositions[currentPatrolPosition]);
-    }
-
-    private void PlayerTappedWall()
-    {
-        Vector3 playerPos = player.transform.position;
-        Vector3 agentPos = this.transform.position;
-
-        if (GetDistanceToPosition(playerPos, agentPos) < 10)
+        private void SetDestination(Vector3 destination)
         {
-            StartCoroutine(SearchForPlayer());
+            agent.SetDestination(destination);
         }
     }
-
 }
