@@ -12,7 +12,7 @@ namespace QuickStart
     {
         //bullet player reference
         //public string playerRef;
-
+        
 
 
         public TextMeshPro playerNameText;
@@ -150,6 +150,7 @@ namespace QuickStart
 
                 if (Input.GetMouseButtonDown(1)) //Right mouse button to change weapon
                 {
+                    this.gameObject.GetComponent<playersounds>().CmdSend();
                     selectedWeaponLocal += 1;
 
                     if (selectedWeaponLocal > weaponArray.Length)
@@ -210,6 +211,7 @@ namespace QuickStart
         [ClientRpc]
         void RpcFireWeapon()
         {
+            this.gameObject.GetComponent<playersounds>().CmdPew();
             //bulletAudio.Play();
             GameObject bullet = Instantiate(activeWeapon.weaponBullet, activeWeapon.weaponFirePosition.position, activeWeapon.weaponFirePosition.rotation);
             bullet.GetComponent<Rigidbody>().velocity = bullet.transform.forward * activeWeapon.weaponSpeed;
@@ -326,6 +328,7 @@ namespace QuickStart
             }
             else if (isDead == true)
             {
+                
                 foreach (var obj in objectsToHide)
                 {
                     obj.SetActive(false);
@@ -335,6 +338,7 @@ namespace QuickStart
             if (isLocalPlayer)
             {
                 sceneScript.SetupScene();
+               
             }
         }
 
@@ -345,16 +349,34 @@ namespace QuickStart
             isDead = _Value;
         }
 
+        [ClientRpc]
+        void damage()
+        { 
+                this.gameObject.GetComponent<playersounds>().CmdAuchie();
+            
+        }
+
+        [ClientRpc]
+        void death()
+        {
+            this.gameObject.GetComponent<playersounds>().CmdDeath();
+
+        }
+
+
         [ServerCallback]
         void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.CompareTag("Bullet"))
             {
+                damage();
                 Debug.Log("Hit by bullet");
+                
                 --health;
                 NetworkServer.Destroy(other.gameObject);
                 if (health == 0)
                 {
+                    death();
                     Debug.Log("Dead");
                     CmdPlayerStatus(true);
                 }
