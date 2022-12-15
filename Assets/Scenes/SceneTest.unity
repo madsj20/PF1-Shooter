@@ -11424,7 +11424,6 @@ GameObject:
   - component: {fileID: 1335930071}
   - component: {fileID: 1335930070}
   - component: {fileID: 1335930073}
-  - component: {fileID: 1335930072}
   m_Layer: 0
   m_Name: MusicMann
   m_TagString: Untagged
@@ -11443,7 +11442,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: b7b6f54e3d4e8ab4f95b8e9cdb13b18c, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.06
   m_Pitch: 1
   Loop: 1
@@ -11543,23 +11542,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1335930072
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1335930069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cdcee83f4f21b334b90eb63d7d6be609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0.1
-  musicmann: {fileID: 1335930070}
-  music: {fileID: 8300000, guid: b7b6f54e3d4e8ab4f95b8e9cdb13b18c, type: 3}
 --- !u!114 &1335930073
 MonoBehaviour:
   m_ObjectHideFlags: 0
