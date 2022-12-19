@@ -13198,6 +13198,7 @@ MonoBehaviour:
   - {fileID: 859630362}
   - {fileID: 1847580109}
   enemy: {fileID: 298446383320521082, guid: c0f73b9ca2136264fbbbd66018ecdbfd, type: 3}
+  sceneScript: {fileID: 118263517}
 --- !u!114 &1551540897
 MonoBehaviour:
   m_ObjectHideFlags: 0
