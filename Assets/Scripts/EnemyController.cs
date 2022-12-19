@@ -50,7 +50,6 @@ namespace QuickStart
             {
                 playerPos = other.GetComponent<Transform>().position;
                 SetDestination(new Vector3(playerPos.x, 0, playerPos.z));
-                //Debug.Log("Player Position " + playerPos);
             }
         }
         private void OnTriggerEnter(Collider other)
@@ -82,7 +81,6 @@ namespace QuickStart
         [Server]
         public void AddScore(string other)
         {
-            //Debug.Log("Hitby:" + other.GetComponent<Bullet>().playerRef);
             ScoreController.scores[other] += 1;
         }
         [Server]

@@ -107,13 +107,6 @@ namespace QuickStart
 
         void Start()
         {
-            /*if (isLocalPlayer)
-            {
-                playerCam.GetComponent<Camera>().enabled = false;
-                return;
-            }*/
-            //Cursor.lockState = CursorLockMode.Locked;
-
             controller = GetComponent<CharacterController>();
         }
 
@@ -139,10 +132,6 @@ namespace QuickStart
                 Camera.main.transform.localRotation = Quaternion.Euler(rotX, 0f, 0f);
 
                 //Player movement
-                //Vector2 moveInput = move.ReadValue<Vector2>();
-                //Vector3 moveVelocity = playerRoot.forward * moveInput.y + playerRoot.right * moveInput.x;
-                //controller.Move(moveVelocity * speed * Time.deltaTime);
-                //controller.Move(velocity * Time.deltaTime);
                 float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f * speed;
                 float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 4f * speed;
                 transform.Translate(0, 0, moveZ);
@@ -158,7 +147,6 @@ namespace QuickStart
 
                     CmdChangeActiveWeapon(selectedWeaponLocal);
                 }
-
 
                 if (Input.GetMouseButtonDown(0)) //Left mouse button to shoot
                 {
@@ -184,16 +172,12 @@ namespace QuickStart
                 }
                 if (Input.GetKeyDown(KeyCode.P))
                 {
-                    //Debug.Log(playerNameText.text + " score: "+ ScoreController.scores[playerNameText.text]);
-
                     var maxValue = ScoreController.scores.Values.Max();
                     var maxValueKey = ScoreController.scores.Aggregate((x, y) => x.Value > y.Value ? x : y).Key;
                     DBScript.AddScore(maxValueKey, maxValue);
 
                     Debug.Log(maxValue + " " + maxValueKey);
-
                 }
-
             }
             else
             {
@@ -218,15 +202,14 @@ namespace QuickStart
             bullet.GetComponent<Bullet>().playerRef = playerNameText.text;
             // PlayerBulletRef(bullet);
             Destroy(bullet, activeWeapon.weaponLife);
-
         }
+
         [Command]
         void PlayerBulletRef(GameObject bullet)
         {
             //  bullet.GetComponent<Bullet>().playerRef = "hejsa";
 
         }
-
 
         void OnNameChanged(string _Old, string _New)
         {
@@ -258,9 +241,6 @@ namespace QuickStart
             string name = "Player" + Random.Range(100, 999);
             Color color = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
             CmdSetupPlayer(name, color);
-
-            // Add the player's score to the scores dictionary
-            //ScoreController.scores.Add(playerNameText.text, 0);
             initiatePlayerScore();
         }
         [Command(requiresAuthority = false)]
@@ -352,8 +332,7 @@ namespace QuickStart
         [ClientRpc]
         void damage()
         { 
-                this.gameObject.GetComponent<playersounds>().CmdAuchie();
-            
+            this.gameObject.GetComponent<playersounds>().CmdAuchie();
         }
 
         [ClientRpc]
@@ -362,7 +341,6 @@ namespace QuickStart
             this.gameObject.GetComponent<playersounds>().CmdDeath();
 
         }
-
 
         [ServerCallback]
         void OnTriggerEnter(Collider other)
