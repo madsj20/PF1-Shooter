@@ -451,7 +451,7 @@ MonoBehaviour:
   sceneScript: {fileID: 118263517}
   scoreController: {fileID: 1493942786}
   DBScript: {fileID: 300106938}
-  timeRemaining: 30
+  timeRemaining: 45
   timerIsRunning: 0
   timeText: {fileID: 851208101}
   winnerText: {fileID: 1587759176}

@@ -9,21 +9,32 @@ namespace QuickStart
     {
         public List<Transform> zombieSpawnpoints = new List<Transform>();
         public GameObject enemy;
+        public SceneScript sceneScript;
+        private bool spawnOnce = true;
 
-        private void Start()
+        private void Update()
         {
-            StartCoroutine(SpawnZombiesTimer());
+            if (sceneScript.readyStatus == 1)
+            {
+                if (spawnOnce == true)
+                {
+                    spawnOnce = false;
+                    StartCoroutine(SpawnZombiesTimer());
+                }
+            }
         }
 
         public void SpawnZombies()
         {
-            int randomRange = Random.Range(0, zombieSpawnpoints.Count);
-            int zombieAmount = Random.Range(5, 25);
-            for (int i = 0; i < zombieAmount; i++)
-            {
+            
+             int randomRange = Random.Range(0, zombieSpawnpoints.Count);
+             int zombieAmount = Random.Range(5, 25);
+             for (int i = 0; i < zombieAmount; i++)
+             {
                 Instantiate(enemy, zombieSpawnpoints[randomRange]);
-            }
-            StartCoroutine(SpawnZombiesTimer());
+             }
+             StartCoroutine(SpawnZombiesTimer());
+            
         }
 
         public IEnumerator SpawnZombiesTimer()
@@ -32,6 +43,6 @@ namespace QuickStart
             time = Random.Range(3, 15);
             yield return new WaitForSeconds(time);
             SpawnZombies();
-    }
+        }
     }
 }
